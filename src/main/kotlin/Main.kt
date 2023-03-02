@@ -71,14 +71,29 @@ fun updateNote(){
     println("You chose Update Note")
 }
 
-fun deleteNote(){
-    println("You chose Delete Note")
-}
+
 
 fun exitApp(){
     println("Exiting...bye")
     exit(0)
 }
+
+fun deleteNote(){
+    //logger.info { "deleteNotes() function invoked" }
+    listNotes()
+    if (noteAPI.numberOfNotes() > 0) {
+        //only ask the user to choose the note to delete if notes exist
+        val indexToDelete = readNextInt("Enter the index of the note to delete: ")
+        //pass the index of the note to NoteAPI for deleting and check for success.
+        val noteToDelete = noteAPI.deleteNote(indexToDelete)
+        if (noteToDelete != null) {
+            println("Delete Successful! Deleted note: ${noteToDelete.noteTitle}")
+        } else {
+            println("Delete NOT Successful")
+        }
+    }
+}
+
 
 
 
