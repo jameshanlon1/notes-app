@@ -2,12 +2,14 @@ package controllers
 
 import Persistence.Serializer
 import models.Note
+import java.io.File
 
 class NoteAPI(serializerType: Serializer){
 
     private var serializer: Serializer = serializerType
 
     private var notes = ArrayList<Note>()
+
 
 
     fun add(note: Note): Boolean {
