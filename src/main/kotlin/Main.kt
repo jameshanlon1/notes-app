@@ -113,7 +113,7 @@ fun deleteNote() {
         //pass the index of the note to NoteAPI for deleting and check for success.
         val noteToDelete = noteAPI.deleteNote(indexToDelete)
         if (noteToDelete != null) {
-            println("Delete Successful! Deleted note: ${noteToDelete.noteTitle}")
+            println("Deleted note: ${noteToDelete.noteTitle}")
         } else {
             println("Delete NOT Successful")
         }
