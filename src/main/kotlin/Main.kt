@@ -1,5 +1,4 @@
 import Persistence.JSONSerializer
-import Persistence.XMLSerializer
 import controllers.NoteAPI
 import models.Note
 import utils.ScannerInput
@@ -29,8 +28,9 @@ fun mainMenu() : Int {
          > |   3) Update a note             |
          > |   4) Delete a note             |
          > |   5) Archive a Note            |
-         > |   6) Search By Title           |
-         > |   7) Search By Owner           |
+         > |   6) Make Note Public          |
+         > |   7) Search By Title           |
+         > |   8) Search By Owner           |
          > |   20) Save notes               |
          > |   21) Load notes               |
          > ----------------------------------
@@ -49,8 +49,9 @@ fun runMenu() {
             3  -> updateNote()
             4  -> deleteNote()
             5  -> archive()
-            6  ->searchNotes()
-            7  ->searchOwner()
+            6  -> public()
+            7  ->searchNotes()
+            8  ->searchOwner()
            20  ->save()
            21  ->load()
             0  -> exitApp()
@@ -65,7 +66,7 @@ fun addNote(){
     val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
     val noteCategory = readNextLine("Enter a category for the note: ")
     val noteOwner = readNextLine("Enter a Name for the note: ")
-    val isAdded = noteAPI.add(Note(noteTitle, notePriority, noteCategory, noteOwner, false))
+    val isAdded = noteAPI.add(Note(noteTitle, notePriority, noteCategory, noteOwner, false,  false))
 
     if (isAdded) {
         println("Added Successfully")
@@ -84,6 +85,9 @@ fun listNotes() {
                   > |   1) View ALL notes          |
                   > |   2) View ACTIVE notes       |
                   > |   3) View ARCHIVED notes     |
+                  > |   4) View Public  notes      |
+                  > |   5) View Private  notes     |
+
                   > --------------------------------
          > ==>> """.trimMargin(">"))
 
@@ -91,6 +95,8 @@ fun listNotes() {
             1 -> listAllNotes();
             2 -> listActiveNotes();
             3 -> listArchivedNotes();
+            4 -> listPublicNotes();
+            5 -> listPrivateNotes();
             else -> println("Invalid option entered: " + option);
         }
     } else {
@@ -134,7 +140,7 @@ fun deleteNote() {
                     val noteCategory = readNextLine("Enter a category for the note: ")
                     val noteOwner = readNextLine("Enter a Name for the note: ")
                     //pass the index of the note and the new note details to NoteAPI for updating and check for success.
-                    if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, notePriority, noteCategory, noteOwner, false))) {
+                    if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, notePriority, noteCategory, noteOwner, false, false))) {
                         println("Update Successful")
                     } else {
                         println("Update Failed")
@@ -207,9 +213,25 @@ fun searchOwner() {
     }
 }
 
+fun public() {
+    listPrivateNotes()
+    if (noteAPI.numberOfPrivateNotes() > 0) {
+        val indexToPublic = readNextInt("Enter the index of the note to make Public: ")
+        //pass the index of the note to NoteAPI to make public and check for success.
+        if (noteAPI.public(indexToPublic)) {
+            println("Save Successful!")
+        } else {
+            println("Save NOT Successful")
+        }
+    }
 
+}
 
+fun listPrivateNotes() {
+    println(noteAPI.listPrivateNotes())
+}
 
-
-
+fun listPublicNotes() {
+    println(noteAPI.listPublicNotes())
+}
 

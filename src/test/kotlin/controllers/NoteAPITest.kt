@@ -27,11 +27,11 @@ class NoteAPITest {
 
     @BeforeEach
     fun setup() {
-        learnKotlin = Note("Learning Kotlin", 5, "College", false)
-        summerHoliday = Note("Summer Holiday to France", 1, "Holiday", false)
-        codeApp = Note("Code App", 4, "Work", true)
-        testApp = Note("Test App", 4, "Work", false)
-        swim = Note("Swim - Pool", 3, "Hobby", true)
+        learnKotlin = Note("Learning Kotlin", 5, "College", "James",true,false)
+        summerHoliday = Note("Summer Holiday to France", 1, "Holiday", "Pat",false,false)
+        codeApp = Note("Code App", 4, "Work", "Bill",false, true)
+        testApp = Note("Test App", 4, "Work", "Sandra",true, false)
+        swim = Note("Swim - Pool", 3, "Hobby", "Hannah",false,true)
 
         //adding 5 Note to the notes api
         populatedNotes!!.add(learnKotlin!!)
@@ -56,7 +56,7 @@ class NoteAPITest {
     inner class AddNotes {
         @Test
         fun `adding a Note to a populated list adds to ArrayList`() {
-            val newNote = Note("Study Lambdas", 1, "College", false)
+            val newNote = Note("Study Lambdas", 1, "College", "Matt", false ,false)
             assertEquals(5, populatedNotes!!.numberOfNotes())
             assertTrue(populatedNotes!!.add(newNote))
             assertEquals(6, populatedNotes!!.numberOfNotes())
@@ -65,7 +65,7 @@ class NoteAPITest {
 
         @Test
         fun `adding a Note to an empty list adds to ArrayList`() {
-            val newNote = Note("Study Lambdas", 1, "College", false)
+            val newNote = Note("Study Lambdas", 1, "College", "Ellen", false, false)
             assertEquals(0, emptyNotes!!.numberOfNotes())
             assertTrue(emptyNotes!!.add(newNote))
             assertEquals(1, emptyNotes!!.numberOfNotes())
@@ -172,7 +172,48 @@ class NoteAPITest {
             assertTrue(priority4String.contains("test app"))
             assertFalse(priority4String.contains("learning kotlin"))
             assertFalse(priority4String.contains("summer holiday"))
+
         }
+
+//new list test added
+            @Test
+            fun `listPublicNotes returns no public notes stored when ArrayList is empty`() {
+                assertEquals(0, emptyNotes!!.numberOfPublicNotes())
+                assertTrue(
+                    emptyNotes!!.listPublicNotes().lowercase().contains("no public notes")
+                )
+            }
+
+            @Test
+            fun `listPublicNotes returns public notes when ArrayList has public notes stored`() {
+                assertEquals(3, populatedNotes!!.numberOfPublicNotes())
+                val publicNotesString = populatedNotes!!.listPublicNotes().lowercase()
+                assertTrue(publicNotesString.contains("learning kotlin"))
+                assertFalse(publicNotesString.contains("code app"))
+                assertTrue(publicNotesString.contains("summer holiday"))
+                assertTrue(publicNotesString.contains("test app"))
+                assertFalse(publicNotesString.contains("swim"))
+            }
+
+            @Test
+            fun `listPrivateNotes returns no Private notes when ArrayList is empty`() {
+                assertEquals(0, emptyNotes!!.numberOfPrivateNotes())
+                assertTrue(
+                    emptyNotes!!.listPrivateNotes().lowercase().contains("no private notes")
+                )
+            }
+
+            @Test
+            fun `listPrivateNotes returns Private notes when ArrayList has Private notes stored`() {
+                assertEquals(2, populatedNotes!!.numberOfPrivateNotes())
+                val privateNotesString = populatedNotes!!.listPrivateNotes().lowercase(Locale.getDefault())
+                assertFalse(privateNotesString.contains("learning kotlin"))
+                assertTrue(privateNotesString.contains("code app"))
+                assertFalse(privateNotesString.contains("summer holiday"))
+                assertFalse(privateNotesString.contains("test app"))
+                assertTrue(privateNotesString.contains("swim"))
+            }
+
 
         @Nested
         inner class DeleteNotes {
@@ -202,9 +243,9 @@ class NoteAPITest {
     inner class UpdateNotes {
         @Test
         fun `updating a note that does not exist returns false`(){
-            assertFalse(populatedNotes!!.updateNote(6, Note("Updating Note", 2, "Work", false)))
-            assertFalse(populatedNotes!!.updateNote(-1, Note("Updating Note", 2, "Work", false)))
-            assertFalse(emptyNotes!!.updateNote(0, Note("Updating Note", 2, "Work", false)))
+            assertFalse(populatedNotes!!.updateNote(6, Note("Updating Note", 2, "Work","Sarah", false ,false)))
+            assertFalse(populatedNotes!!.updateNote(-1, Note("Updating Note", 2, "Work","Brian",false, false)))
+            assertFalse(emptyNotes!!.updateNote(0, Note("Updating Note", 2, "Work", "Mary", false, false)))
         }
 
         @Test
@@ -216,7 +257,7 @@ class NoteAPITest {
             assertEquals("Hobby", populatedNotes!!.findNote(4)!!.noteCategory)
 
             //update note 5 with new information and ensure contents updated successfully
-            assertTrue(populatedNotes!!.updateNote(4, Note("Updating Note", 2, "College", false)))
+            assertTrue(populatedNotes!!.updateNote(4, Note("Updating Note", 2, "College", "Pete",false ,false)))
             assertEquals("Updating Note", populatedNotes!!.findNote(4)!!.noteTitle)
             assertEquals(2, populatedNotes!!.findNote(4)!!.notePriority)
             assertEquals("College", populatedNotes!!.findNote(4)!!.noteCategory)

@@ -5,5 +5,6 @@ data class Note(
     var notePriority: Int,
     var noteCategory: String,
     var noteOwner: String,
+    var isNotePublic: Boolean,
     var isNoteArchived: Boolean){
 }
