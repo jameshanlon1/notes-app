@@ -19,23 +19,18 @@ fun main(args: Array<String>) {
 
 fun mainMenu() : Int {
     return ScannerInput.readNextInt(""" 
-         > ----------------------------------
-         > |        NOTE KEEPER APP         |
-         > ----------------------------------
-         > | NOTE MENU                      |
-         > |   1) Add a note                |
-         > |   2) List all notes            |
-         > |   3) Update a note             |
-         > |   4) Delete a note             |
-         > |   5) Archive a Note            |
-         > |   6) Make Note Public          |
-         > |   7) Search By Title           |
-         > |   8) Search By Owner           |
-         > |   20) Save notes               |
-         > |   21) Load notes               |
-         > ----------------------------------
-         > |   0) Exit                      |
-         > ----------------------------------
+         > -----------------------------------------------------------------------
+         > |                            NOTE KEEPER APP                          |
+         > -----------------------------------------------------------------------
+         > |           NOTE MENU                |   |      (6) Make Note Public  |
+         > |      (1) Add a note                |   |      (7) Search By Title   |
+         > |      (2) List all notes            |   |      (8) Search By Owner   |   
+         > |      (3) Update a note             |   |                            |
+         > |      (4) Delete a note             |   |      (20) Save notes       |
+         > |      (5) Archive a Note            |   |      (21) Load notes       |  
+         > -----------------------------------------------------------------------
+         > |                              (0) Exit                               |
+         > -----------------------------------------------------------------------
          > ==>> """.trimMargin(">"))
 }
 
