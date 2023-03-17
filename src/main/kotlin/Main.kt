@@ -233,7 +233,7 @@ fun listArchivedNotes() {
     println(noteAPI.listArchivedNotes())
 }
 
-fun searchNotes() {
+fun searchNotes() { // search notes by title
     val searchTitle = readNextLine("Enter the description to search by: ")
     val searchResults = noteAPI.searchByTitle(searchTitle)
     if (searchResults.isEmpty()) {
@@ -243,7 +243,7 @@ fun searchNotes() {
     }
 }
 
-fun searchOwner() {
+fun searchOwner() { // search for a note by owner name
     val searchName = readNextLine("Enter the Name to search by: ")
     val searchResult = noteAPI.searchByOwner(searchName)
     if (searchResult.isEmpty()) {
@@ -253,7 +253,7 @@ fun searchOwner() {
     }
 }
 
-fun public() {
+fun public() { // converts a private note to public
     listPrivateNotes()
     if (noteAPI.numberOfPrivateNotes() > 0) {
         val indexToPublic = readNextInt("Enter the index of the note to make Public: ")
@@ -267,11 +267,11 @@ fun public() {
 
 }
 
-fun listPrivateNotes() {
+fun listPrivateNotes() { //list all private notes
     println(noteAPI.listPrivateNotes())
 }
 
-fun listPublicNotes() {
+fun listPublicNotes() { // list all public notes
     println(noteAPI.listPublicNotes())
 }
 

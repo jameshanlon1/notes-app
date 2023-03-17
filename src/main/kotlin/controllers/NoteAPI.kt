@@ -111,32 +111,32 @@ class NoteAPI(serializerType: Serializer) {
             notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true) })
 
 
-    private fun formatListString(notesToFormat: List<Note>): String =
+    private fun formatListString(notesToFormat: List<Note>): String =   //use of function to stop repitition
         notesToFormat
             .joinToString(separator = "\n") { note ->
                 notes.indexOf(note).toString() + ": " + note.toString()
             }
 
 
-    fun searchByOwner(searchString: String) =
+    fun searchByOwner(searchString: String) =                   //gets not by owner name
         formatListString(
             notes.filter { note -> note.noteOwner.contains(searchString, ignoreCase = true) })
 
 
-    fun listPublicNotes(): String =
+    fun listPublicNotes(): String =                                     //list all public notes
         if (numberOfPublicNotes() == 0) "No Public notes stored"
         else formatListString(notes.filter { note -> note.isNotePublic })
 
-    fun listPrivateNotes(): String =
+    fun listPrivateNotes(): String =                                  // list all private notes
         if (numberOfPrivateNotes() == 0) "No Private notes stored"
         else formatListString(notes.filter { note -> !note.isNotePublic })
 
 
-    fun numberOfPublicNotes(): Int = notes.count { note: Note -> note.isNotePublic }
+    fun numberOfPublicNotes(): Int = notes.count { note: Note -> note.isNotePublic } //counts number of public notes
 
-    fun numberOfPrivateNotes(): Int = notes.count { note: Note -> !note.isNotePublic }
+    fun numberOfPrivateNotes(): Int = notes.count { note: Note -> !note.isNotePublic } // counts number of private notes
 
-    fun public(indexToPublic: Int): Boolean {
+    fun public(indexToPublic: Int): Boolean { // checks note is private and allows conversion to public
         if (isValidIndex(indexToPublic)) {
             val noteToPublic = notes[indexToPublic]
             if (!noteToPublic.isNotePublic) {
