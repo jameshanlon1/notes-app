@@ -2,7 +2,6 @@ package controllers
 
 import Persistence.Serializer
 import models.Note
-import java.io.File
 
 class NoteAPI(serializerType: Serializer) {
 
@@ -123,5 +122,28 @@ class NoteAPI(serializerType: Serializer) {
         formatListString(
             notes.filter { note -> note.noteOwner.contains(searchString, ignoreCase = true) })
 
-}
 
+    fun listPublicNotes(): String =
+        if (numberOfPublicNotes() == 0) "No Public notes stored"
+        else formatListString(notes.filter { note -> note.isNotePublic })
+
+    fun listPrivateNotes(): String =
+        if (numberOfPrivateNotes() == 0) "No Private notes stored"
+        else formatListString(notes.filter { note -> !note.isNotePublic })
+
+
+    fun numberOfPublicNotes(): Int = notes.count { note: Note -> note.isNotePublic }
+
+    fun numberOfPrivateNotes(): Int = notes.count { note: Note -> !note.isNotePublic }
+
+    fun public(indexToPublic: Int): Boolean {
+        if (isValidIndex(indexToPublic)) {
+            val noteToPublic = notes[indexToPublic]
+            if (!noteToPublic.isNotePublic) {
+                noteToPublic.isNotePublic = true
+                return true
+            }
+        }
+        return false
+    }
+}
