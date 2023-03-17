@@ -63,9 +63,31 @@ fun runMenu() {
 fun addNote(){
     //logger.info { "addNote() function invoked" }
     val noteTitle = readNextLine("Enter a title for the note: ")
+    if (validateInput(noteTitle)) {                             //validation make sure strings are 3 in length
+                print("")
+    }else{
+        println("Not a valid Title---Try again:")
+            addNote()
+    }
+
     val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
+
     val noteCategory = readNextLine("Enter a category for the note: ")
+    if (validateInput(noteCategory)) {
+        print("")
+    }else{
+        println("Not a valid Category---Try again:")
+        addNote()
+    }
+
     val noteOwner = readNextLine("Enter a Name for the note: ")
+    if (validateInput(noteOwner)) {
+        print("")
+    }else{
+        println("Not a valid Name---Try again:")
+        addNote()
+    }
+
     val isAdded = noteAPI.add(Note(noteTitle, notePriority, noteCategory, noteOwner, false,  false))
 
     if (isAdded) {
@@ -73,6 +95,10 @@ fun addNote(){
     } else {
         println("Add Failed")
     }
+}
+
+fun validateInput(input: String): Boolean{
+    return input.length >=3
 }
 
 
@@ -135,10 +161,29 @@ fun deleteNote() {
                 //only ask the user to choose the note if notes exist
                 val indexToUpdate = readNextInt("Enter the index of the note to update: ")
                 if (noteAPI.isValidIndex(indexToUpdate)) {
-                    val noteTitle = readNextLine("Enter a title for the note: ")
+                    val noteTitle = readNextLine("Enter a title for the note: ")//validation make sure strings are 3 in length
+                    if (validateInput(noteTitle)) {
+                        print("")
+                    }else{
+                        println("Not a valid Title---Try again:")
+                        updateNote()
+                    }
                     val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
                     val noteCategory = readNextLine("Enter a category for the note: ")
+                    if (validateInput(noteCategory)) {
+                        print("")
+                    }else{
+                        println("Not a valid Category---Try again:")
+                        updateNote()
+                    }
                     val noteOwner = readNextLine("Enter a Name for the note: ")
+                    if (validateInput(noteOwner)) {
+                        print("")
+                    }else{
+                        println("Not a valid Name---Try again:")
+                        updateNote()
+                    }
+
                     //pass the index of the note and the new note details to NoteAPI for updating and check for success.
                     if (noteAPI.updateNote(indexToUpdate, Note(noteTitle, notePriority, noteCategory, noteOwner, false, false))) {
                         println("Update Successful")

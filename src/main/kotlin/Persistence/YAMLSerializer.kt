@@ -1,5 +1,5 @@
 package Persistence
-
+/*
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinModule
@@ -12,7 +12,7 @@ import models.Note
 import java.io.FileReader
 import java.io.FileWriter
 import java.lang.Exception
-/*
+
 class YAMLSerializer(private val file: File) : Serializer {
 
     @Throws(Exception::class)
