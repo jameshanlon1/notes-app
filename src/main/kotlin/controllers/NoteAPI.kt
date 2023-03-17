@@ -17,17 +17,11 @@ class NoteAPI(serializerType: Serializer){
     }
 
 
-    fun listAllNotes(): String {
-        return if (notes.isEmpty()) {
-            "No notes stored"
-        } else {
-            var listOfNotes = ""
-            for (i in notes.indices) {
-                listOfNotes += "${i}: ${notes[i]} \n"
-            }
-            listOfNotes
-        }
-    }
+    fun listAllNotes(): String =
+        if  (notes.isEmpty()) "No notes stored"
+        else notes.joinToString (separator = "\n") { note ->
+            notes.indexOf(note).toString() + ": " + note.toString() }
+
 
     fun numberOfNotes(): Int {
         return notes.size
@@ -58,19 +52,13 @@ class NoteAPI(serializerType: Serializer){
         }
     }
 
-    fun listArchivedNotes(): String {
-        return if (numberOfArchivedNotes() == 0) {
-            "No archived notes stored"
-        } else {
-            var listOfArchivedNotes = ""
-            for (note in notes) {
-                if (note.isNoteArchived) {
-                    listOfArchivedNotes += "${notes.indexOf(note)}: $note \n"
-                }
-            }
-            listOfArchivedNotes
-        }
-    }
+    fun listArchivedNotes(): String =
+        if  (numberOfArchivedNotes() == 0) "No archived notes stored"
+    else notes.joinToString (separator = "\n") { note ->
+        notes.indexOf(note).toString() + ": " + note.toString() }
+
+
+
 
     fun numberOfArchivedNotes(): Int {
         var counter = 0
