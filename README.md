@@ -34,7 +34,7 @@ If you need to access saved notes, enter the "Load Notes" number. This will brin
 
 If you need to find a specific note, you can use our search function. Simply either enter the "Search Title" or "Search Owner" number and type in the keyword you want to look for.
 
-That's it! Our notes app is simple, intuitive, and reliable. We hope you enjoy using it as much as we enjoyed creating it. Happy note-taking!
+That's it! My notes app is simple, intuitive, and reliable. We hope you enjoy using it as much as we enjoyed creating it. Happy note-taking!
 
 ## Project Authors
 James Hanlon
